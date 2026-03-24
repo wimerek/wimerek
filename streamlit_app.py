@@ -68,6 +68,9 @@ def format_height_decimal(val_inches):
 def load_players():
     try:
         df = pd.read_csv(PLAYERS_FILE)
+        for m in ["weight", "arm_length", "forty", "vertical", "broad_jump", "three_cone", "shuttle"]:
+            if m in df.columns:
+                df[m] = pd.to_numeric(df[m], errors="coerce")
         df["height_in"] = df["height"].apply(parse_height)
         if "draft_year" not in df.columns:
             df["draft_year"] = ""
